@@ -139,66 +139,79 @@ function movePlayer(x, y, deltaX, deltaY, turn) {
 	var centerY = player.position.y + player.height / 2;
 
 	if (absX < 1 || absY < 1) {
+		var closestIndex = -1;
+		var minDistance = 5000;
+
 		for (var i = 0; i < enemies.length; i++) {
 			var centerEnemyX = enemies[i].position.x + enemies[i].width / 2;
 			var centerEnemyY = enemies[i].position.y + enemies[i].height / 2;
 
 			var areInCollision = detectNearCollision(centerX, centerY, player.width, player.height, centerEnemyX, centerEnemyY, enemies[i].width + 20, enemies[i].height + 20);
 			if (areInCollision) {
-				var dialogTexture = PIXI.Texture.fromImage("media/dialog.jpeg");
-				dialog[i] = new PIXI.Sprite(dialogTexture);
-				stage.addChild(dialog[i]);
-
-				dialog[i].position.x = enemies[i].position.x - 50;
-				dialog[i].position.y = enemies[i].position.y - 50;
-
-				dialog[i].interactive = true;
-
-				dialog[i].click = function(data){
-				    bootbox.dialog({
-						message: "<input id='charInput' placeholder='Ask me...'/>" +
-							"<button id='ask'> Ask </button>",
-						title: "Custom title",
-						buttons: {
-							first: {
-							  	label: "How are you?",
-							  	className: "btn-primary",
-							  	callback: function() {
-							    	Example.show("great success");
-							  	}
-							},
-							second: {
-							  	label: "Are you going to blow the bomb?",
-							  	className: "btn-primary",
-							  	callback: function() {
-							    	Example.show("uh oh, look out!");
-							  	}
-							},
-							third: {
-							  	label: "I like oranges!",
-							  	className: "btn-primary",
-							  	callback: function() {
-							    	Example.show("Primary button");
-						  		}
-							},
-							fourth: {
-							  	label: "Bye!",
-							  	className: "btn-primary",
-							  	callback: function() {
-							    	bootbox.hideAll();
-						  		}
-							}
-						}
-					});
-				}
-			} else {
-				if (dialog[i]) {
-					stage.removeChild(dialog[i]);
+				var distance = Math.sqrt(Math.abs(centerEnemyX - centerX) ^ 2 + Math.abs(centerEnemyY - centerY) ^ 2);
+				if (distance < minDistance) {
+					minDistance = distance;
+					closestIndex = i;
 				}
 			}
+		}
 
-			renderer.render(stage);
-		};
+		for (var i = 0; i < enemies.length; i++) {
+			if (i !== closestIndex) {
+				stage.removeChild(dialog[i]);
+
+				renderer.render(stage);
+			}
+		}
+
+		var dialogTexture = PIXI.Texture.fromImage("media/dialog.jpeg");
+		dialog[closestIndex] = new PIXI.Sprite(dialogTexture);
+		stage.addChild(dialog[closestIndex]);
+
+		dialog[closestIndex].position.x = enemies[closestIndex].position.x - 50;
+		dialog[closestIndex].position.y = enemies[closestIndex].position.y - 50;
+
+		dialog[closestIndex].interactive = true;
+
+		dialog[closestIndex].click = function(data){
+		    bootbox.dialog({
+				message: "<input id='charInput' placeholder='Ask me...'/>" +
+					"<button id='ask'> Ask </button>",
+				title: "Custom title",
+				buttons: {
+					first: {
+					  	label: "How are you?",
+					  	className: "btn-primary",
+					  	callback: function() {
+					    	Example.show("great success");
+					  	}
+					},
+					second: {
+					  	label: "Are you going to blow the bomb?",
+					  	className: "btn-primary",
+					  	callback: function() {
+					    	Example.show("uh oh, look out!");
+					  	}
+					},
+					third: {
+					  	label: "I like oranges!",
+					  	className: "btn-primary",
+					  	callback: function() {
+					    	Example.show("Primary button");
+				  		}
+					},
+					fourth: {
+					  	label: "Bye!",
+					  	className: "btn-primary",
+					  	callback: function() {
+					    	bootbox.hideAll();
+				  		}
+					}
+				}
+			});
+		}
+
+		renderer.render(stage);
 
 		return;
 	}
