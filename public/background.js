@@ -6,7 +6,28 @@ $(document).on('click', '#ask', function () {
 
 // create an array of assets to load
 
-var assetsToLoader = ["../media/room4.jpg", "../media/chairmini.png","../media/CharSmallState1.png", "../media/CharSmallState2.png", "../media/enemy.jpeg", "../media/dialog.jpeg"];
+var assetsToLoader = ["../media/room4.jpg",
+	"../media/chairmini2.png",
+	"../media/tablemini2.png",
+	"../media/CharSmallState1B.png",
+	"../media/CharSmallState1half.png",
+	"../media/CharSmallState2B.png",
+	"../media/enemy.jpeg",
+	"../media/dialog.jpeg",
+	"../media/napoleon.jpeg",
+	"../media/Napoleon1.png",
+	"../media/Napoleon2.png",
+	"../media/Napoleon3.png",
+	"../media/churchill.jpeg",
+	"../media/Churchill1.png",
+	"../media/beethoven.jpeg",
+	"../media/Beethoven1.png",
+	"../media/chaplin.jpeg",
+	"../media/Chaplin1.png",
+	"../media/gandhi.jpeg",
+	"../media/Gandhi1.png",
+	"../media/Gandhi2.png",
+	"../media/Gandhi3.png",];
 
 // create a new loader
 loader = new PIXI.AssetLoader(assetsToLoader);
@@ -21,12 +42,12 @@ loader.load();
 var stage = new PIXI.Stage(0xFFFFFF, true);
 
 // create a renderer instance
-var renderer = new PIXI.autoDetectRenderer(1024, 640);
+var renderer = new PIXI.autoDetectRenderer(1024, 600);
 
 // set the canvas width and height to fill the screen
 //renderer.view.style.display = "block";
-renderer.view.style.width = "1024px"
-renderer.view.style.height = "640px"
+renderer.view.style.width = "1024"
+renderer.view.style.height = "600"
 
 // add render view to DOM
 document.body.appendChild(renderer.view);
@@ -34,9 +55,12 @@ document.body.appendChild(renderer.view);
 var postition = 0;
 var background;
 var chair;
+var table;
 var player;
 var enemies = [];
-var dialog = {};
+var dialog = [];
+var talkTextures = [];
+var talks = [];
 
 function onAssetsLoaded()
 {
@@ -70,14 +94,21 @@ function onAssetsLoaded()
         });
 	}
 
-	var chairTexture = PIXI.Texture.fromImage("media/chairmini.png");
+	var chairTexture = PIXI.Texture.fromImage("media/chairmini2.png");
 	chair = new PIXI.Sprite(chairTexture);
 	stage.addChild(chair);
 
 	chair.position.x = 100;
-	chair.position.y = 300;
+	chair.position.y = 350;
 
-	var playerTexture = PIXI.Texture.fromImage("media/CharSmallState2.png");
+	var tableTexture = PIXI.Texture.fromImage("media/tablemini2.png");
+	table = new PIXI.Sprite(tableTexture);
+	stage.addChild(table);
+
+	table.position.x = 140;
+	table.position.y = 370;
+
+	var playerTexture = PIXI.Texture.fromImage("media/CharSmallState1B.png");
 	player = new PIXI.Sprite(playerTexture);
 	stage.addChild(player);
 
@@ -92,15 +123,33 @@ function onAssetsLoaded()
 		enemies[i] = new PIXI.Sprite(enemyTexture);
 		stage.addChild(enemies[i]);
 
-		enemies[i].position.x = Math.floor(Math.random() * (700 - 200 + 1)) + 200;
+		enemies[i].position.x = Math.floor(Math.random() * (850 - 200 + 1)) + 200;
 		enemies[i].position.y = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
 	};
+
+	enemies[0].name = 'Napoleon';
+	enemies[1].name = 'Churchill';
+	enemies[2].name = 'Beethoven';
+	enemies[3].name = 'Chaplin';
+	enemies[4].name = 'Gandhi';
+
+	enemies[0].texture = PIXI.Texture.fromImage("media/Napoleon1.png");
+	enemies[1].texture = PIXI.Texture.fromImage("media/Churchill1.png");
+	enemies[2].texture = PIXI.Texture.fromImage("media/Beethoven1.png");
+	enemies[3].texture = PIXI.Texture.fromImage("media/Chaplin1.png");
+	enemies[4].texture = PIXI.Texture.fromImage("media/Gandhi1.png");
+
+	enemies[0].pic = '../media/napoleon.jpeg';
+	enemies[1].pic = '../media/churchill.jpeg';
+	enemies[2].pic = '../media/beethoven.jpeg';
+	enemies[3].pic = '../media/chaplin.jpeg';
+	enemies[4].pic = '../media/gandhi.jpeg';
 
 	requestAnimFrame(animate);
 
 	setTimeout(
 		function(){
-			var i = 2;
+			var i = 0;
 			var x = 400;
 			var y = 400;
 
@@ -112,7 +161,7 @@ function onAssetsLoaded()
 	setTimeout(
 		function(){
 			var i = 4;
-			var x = 600;
+			var x = 800;
 			var y = 500;
 
 			initiateEnemyMove (x, y, i)
@@ -156,10 +205,18 @@ function detectNearCollision (x1, y1, width1, height1, x2, y2, width2, height2) 
 }
 
 function moveEnemy(x, y, deltaX, deltaY, turn, i) {
-	if (turn % 50 === 0) {
-		enemies[i].texture = PIXI.Texture.fromImage("media/enemy.jpeg");
-	} else if (turn % 50 === 25){
-		enemies[i].texture = PIXI.Texture.fromImage("media/CharSmallState1.png");
+	var character;
+
+	if (enemies[i].name === 'Napoleon') {
+		character
+	}
+
+	if (turn % 60 === 0) {
+		enemies[i].texture = PIXI.Texture.fromImage("media/" + enemies[i].name + "2.png");
+	} else if (turn % 60 === 20){
+		enemies[i].texture = PIXI.Texture.fromImage("media/" + enemies[i].name + "3.png");
+	} else if (turn % 60 === 40){
+		enemies[i].texture = PIXI.Texture.fromImage("media/" + enemies[i].name + "1.png");
 	}
 	
 	turn++;
@@ -185,10 +242,12 @@ function moveEnemy(x, y, deltaX, deltaY, turn, i) {
 }
 
 function movePlayer(x, y, deltaX, deltaY, turn) {
-	if (turn % 50 === 0) {
-		player.texture = PIXI.Texture.fromImage("media/CharSmallState1.png");
-	} else if (turn % 50 === 25){
-		player.texture = PIXI.Texture.fromImage("media/CharSmallState2.png");
+	if (turn % 60 === 0) {
+		player.texture = PIXI.Texture.fromImage("media/CharSmallState1half.png");
+	} else if (turn % 60 === 20){
+		player.texture = PIXI.Texture.fromImage("media/CharSmallState2B.png");
+	} else if (turn % 60 === 40){
+		player.texture = PIXI.Texture.fromImage("media/CharSmallState1B.png");
 	}
 	
 	turn++;
@@ -217,61 +276,72 @@ function movePlayer(x, y, deltaX, deltaY, turn) {
 			}
 		}
 
-		for (var i = 0; i < enemies.length; i++) {
-			if (i !== closestIndex) {
+		if (closestIndex === -1) {
+			for (var i = 0; i < enemies.length; i++) {
 				stage.removeChild(dialog[i]);
 
 				renderer.render(stage);
 			}
-		}
+		} else {
+			for (var i = 0; i < enemies.length; i++) {
+				if (i !== closestIndex) {
+					stage.removeChild(dialog[i]);
 
-		var dialogTexture = PIXI.Texture.fromImage("media/dialog.jpeg");
-		dialog[closestIndex] = new PIXI.Sprite(dialogTexture);
-		stage.addChild(dialog[closestIndex]);
-
-		dialog[closestIndex].width = 20;
-		dialog[closestIndex].height = 20;
-		dialog[closestIndex].position.x = enemies[closestIndex].position.x;
-		dialog[closestIndex].position.y = enemies[closestIndex].position.y;
-
-		dialog[closestIndex].interactive = true;
-
-		dialog[closestIndex].click = function(data){
-		    bootbox.dialog({
-				message: "<input id='charInput' placeholder='Ask me...'/>" +
-					"<button id='ask'> Ask </button>",
-				title: "Custom title",
-				buttons: {
-					first: {
-					  	label: "How are you?",
-					  	className: "btn-primary",
-					  	callback: function() {
-					    	Example.show("great success");
-					  	}
-					},
-					second: {
-					  	label: "Are you going to blow the bomb?",
-					  	className: "btn-primary",
-					  	callback: function() {
-					    	Example.show("uh oh, look out!");
-					  	}
-					},
-					third: {
-					  	label: "I like oranges!",
-					  	className: "btn-primary",
-					  	callback: function() {
-					    	Example.show("Primary button");
-				  		}
-					},
-					fourth: {
-					  	label: "Bye!",
-					  	className: "btn-primary",
-					  	callback: function() {
-					    	bootbox.hideAll();
-				  		}
-					}
+					renderer.render(stage);
 				}
-			});
+			}
+
+			var dialogTexture = PIXI.Texture.fromImage("media/dialog.jpeg");
+			dialog[closestIndex] = new PIXI.Sprite(dialogTexture);
+			stage.addChild(dialog[closestIndex]);
+
+			dialog[closestIndex].width = 20;
+			dialog[closestIndex].height = 20;
+			dialog[closestIndex].position.x = enemies[closestIndex].position.x;
+			dialog[closestIndex].position.y = enemies[closestIndex].position.y;
+
+			dialog[closestIndex].interactive = true;
+
+			dialog[closestIndex].click = function(data){
+
+			    bootbox.dialog({
+			    	className: "my-dialog",
+					message: "<img src=" + enemies[closestIndex].pic + " style='margin-right: 30px;'/>" +
+						"<input id='charInput' placeholder='Ask me...'/>" +
+						"<button id='ask'> Ask </button>",
+					title: enemies[closestIndex].name,
+					buttons: {
+						first: {
+						  	label: "How are you?",
+						  	className: "btn-primary",
+						  	callback: function() {
+						    	Example.show("great success");
+						  	}
+						},
+						second: {
+						  	label: "Are you going to blow the bomb?",
+						  	className: "btn-primary",
+						  	callback: function() {
+						    	Example.show("uh oh, look out!");
+						  	}
+						},
+						third: {
+						  	label: "I like oranges!",
+						  	className: "btn-primary",
+						  	callback: function() {
+						    	Example.show("Primary button");
+					  		}
+						},
+						fourth: {
+						  	label: "Bye!",
+						  	className: "btn-primary",
+						  	callback: function() {
+						    	bootbox.hideAll();
+					  		}
+						}
+					}
+				});
+			}
 		}
 
 		renderer.render(stage);
