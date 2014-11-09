@@ -96,18 +96,50 @@ function onAssetsLoaded()
 		enemies[i].position.y = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
 	};
 
-	
-
-	// enemy.position.x = 500;
-	// enemy.position.y = 500;
-
-	// enemy.interactive = true;
-
-	// enemy.click = function(data){
-	// 	debugger;
-	// }
-
 	requestAnimFrame(animate);
+
+	setTimeout(
+		function(){
+			var i = 2;
+			var x = 400;
+			var y = 400;
+
+			initiateEnemyMove (x, y, i)
+		},
+		3000
+	);
+
+	setTimeout(
+		function(){
+			var i = 4;
+			var x = 600;
+			var y = 500;
+
+			initiateEnemyMove (x, y, i)
+		},
+		7000
+	);
+}
+
+function initiateEnemyMove (x, y, i) {
+	if (x - enemies[i].position.x) {
+		x -= enemies[i].width / 2;
+	} else {
+		x += enemies[i].width / 2;
+	}
+
+	if (y - enemies[i].position.y) {
+		y -= enemies[i].height / 2;
+	} else {
+		y += enemies[i].height / 2;
+	}
+
+	var deltaX = x - enemies[i].position.x;
+	var deltaY = y - enemies[i].position.y;
+
+	requestAnimFrame(function() {
+    	moveEnemy(x, y, deltaX, deltaY, 0, i);
+    });
 }
 
 function detectNearCollision (x1, y1, width1, height1, x2, y2, width2, height2) {
@@ -121,6 +153,35 @@ function detectNearCollision (x1, y1, width1, height1, x2, y2, width2, height2) 
 	top2 = y2 - height2;
 	bottom2 = y2 + height2;
 	return !(left1 > right2 || left2 > right1 || top1 > bottom2 || top2 > bottom1);
+}
+
+function moveEnemy(x, y, deltaX, deltaY, turn, i) {
+	if (turn % 50 === 0) {
+		enemies[i].texture = PIXI.Texture.fromImage("media/enemy.jpeg");
+	} else if (turn % 50 === 25){
+		enemies[i].texture = PIXI.Texture.fromImage("media/CharSmallState1.png");
+	}
+	
+	turn++;
+
+	var absX = Math.abs(enemies[i].position.x - x);
+	var absY = Math.abs(enemies[i].position.y - y);
+
+	var centerX = enemies[i].position.x + enemies[i].width / 2;
+	var centerY = enemies[i].position.y + enemies[i].height / 2;
+
+	if (absX < 1 || absY < 1) {
+		return;
+	}
+
+	enemies[i].position.x += deltaX / 100;
+	enemies[i].position.y += deltaY / 100;
+
+	requestAnimFrame(function() {
+      	moveEnemy(x, y, deltaX, deltaY, turn, i);
+    });
+
+	renderer.render(stage);
 }
 
 function movePlayer(x, y, deltaX, deltaY, turn) {
@@ -168,8 +229,10 @@ function movePlayer(x, y, deltaX, deltaY, turn) {
 		dialog[closestIndex] = new PIXI.Sprite(dialogTexture);
 		stage.addChild(dialog[closestIndex]);
 
-		dialog[closestIndex].position.x = enemies[closestIndex].position.x - 50;
-		dialog[closestIndex].position.y = enemies[closestIndex].position.y - 50;
+		dialog[closestIndex].width = 20;
+		dialog[closestIndex].height = 20;
+		dialog[closestIndex].position.x = enemies[closestIndex].position.x;
+		dialog[closestIndex].position.y = enemies[closestIndex].position.y;
 
 		dialog[closestIndex].interactive = true;
 
