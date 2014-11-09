@@ -1,3 +1,9 @@
+$(document).on('click', '#ask', function () {
+	// search in wikipedia
+	var input = $('#charInput').val();
+	console.log(input);
+});
+
 // create an array of assets to load
 
 var assetsToLoader = ["../media/room4.jpg", "../media/chairmini.png","../media/CharSmallState1.png", "../media/CharSmallState2.png", "../media/enemy.jpeg", "../media/dialog.jpeg"];
@@ -149,7 +155,41 @@ function movePlayer(x, y, deltaX, deltaY, turn) {
 				dialog[i].interactive = true;
 
 				dialog[i].click = function(data){
-				    
+				    bootbox.dialog({
+						message: "<input id='charInput' placeholder='Ask me...'/>" +
+							"<button id='ask'> Ask </button>",
+						title: "Custom title",
+						buttons: {
+							first: {
+							  	label: "How are you?",
+							  	className: "btn-primary",
+							  	callback: function() {
+							    	Example.show("great success");
+							  	}
+							},
+							second: {
+							  	label: "Are you going to blow the bomb?",
+							  	className: "btn-primary",
+							  	callback: function() {
+							    	Example.show("uh oh, look out!");
+							  	}
+							},
+							third: {
+							  	label: "I like oranges!",
+							  	className: "btn-primary",
+							  	callback: function() {
+							    	Example.show("Primary button");
+						  		}
+							},
+							fourth: {
+							  	label: "Bye!",
+							  	className: "btn-primary",
+							  	callback: function() {
+							    	bootbox.hideAll();
+						  		}
+							}
+						}
+					});
 				}
 			} else {
 				if (dialog[i]) {
