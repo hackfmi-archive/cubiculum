@@ -11,8 +11,13 @@ $(document).on('click', '#ask', function () {
 		var moodLabel = mood_label(character.mood).toLowerCase();
 		var moodLabelCapitalize = moodLabel[0].toUpperCase() + moodLabel.slice(1);
 
+		if ($('#ask').parent().find('img').length >= 2) {
+			$($('#ask').parent().find('img:nth-of-type(2)')[0]).fadeTo( "slow", 0.33 );
+		}
+
 		if ($('#ask').parent().find('img').length >= 3) {
 			$($('#ask').parent().find('img:nth-of-type(2)')[0]).remove();
+			$($('#ask').parent().find('img:nth-of-type(2)')[0]).fadeTo( "slow", 0.33 );
 		}
 
 		$('#ask').parent().append("<img class='emo' src='../media/" + moodLabelCapitalize + ".png' style='margin-left: 60px;'/>");
@@ -174,7 +179,17 @@ function onAssetsLoaded()
 	            'sign',
 	            'language',
 	            'cleaning',
-	            'hygiene'
+	            'hygiene',
+	            'opera',
+	            'stoic',
+	            'tough',
+	            'religious',
+	            'christianity',
+	            'heroic',
+	            'epic',
+	            'race',
+	            'competition',
+	            'tournament'
 	        ];
     enemies[2].dislikes = [
 	            'country',
@@ -184,7 +199,13 @@ function onAssetsLoaded()
 	            'dubstep',
 	            'lazy',
 	            'holiday',
-	            'landmark'
+	            'landmark',
+	            'punctional',
+	            'manners',
+	            'sociable'
+	            'interaction',
+	            'conquest',
+	            'dictator'
 	        ];
 
 	requestAnimFrame(animate);
