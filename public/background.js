@@ -1,6 +1,6 @@
 // create an array of assets to load
 
-var assetsToLoader = ["../media/background.jpeg", "../media/player.jpeg", "../media/enemy.jpeg", "../media/dialog.jpeg"];
+var assetsToLoader = ["../media/room4.jpg", "../media/chairmini.png","../media/CharState1.png", "../media/CharState2.png", "../media/enemy.jpeg", "../media/dialog.jpeg"];
 
 // create a new loader
 loader = new PIXI.AssetLoader(assetsToLoader);
@@ -27,13 +27,14 @@ document.body.appendChild(renderer.view);
 
 var postition = 0;
 var background;
+var chair;
 var player;
 var enemies = [];
 var dialog = {};
 
 function onAssetsLoaded()
 {
-	var backgroundTexture = PIXI.Texture.fromImage("media/background.jpeg");
+	var backgroundTexture = PIXI.Texture.fromImage("media/room4.jpg");
 	background = new PIXI.Sprite(backgroundTexture);
 	stage.addChild(background);
 
@@ -61,11 +62,16 @@ function onAssetsLoaded()
 		requestAnimFrame(function() {
         	movePlayer(x, y, deltaX, deltaY, 0);
         });
-
-
 	}
 
-	var playerTexture = PIXI.Texture.fromImage("media/player.jpeg");
+	var chairTexture = PIXI.Texture.fromImage("media/chairmini.png");
+	chair = new PIXI.Sprite(chairTexture);
+	stage.addChild(chair);
+
+	chair.position.x = 100;
+	chair.position.y = 300;
+
+	var playerTexture = PIXI.Texture.fromImage("media/CharState2.png");
 	player = new PIXI.Sprite(playerTexture);
 	stage.addChild(player);
 
@@ -80,8 +86,8 @@ function onAssetsLoaded()
 		enemies[i] = new PIXI.Sprite(enemyTexture);
 		stage.addChild(enemies[i]);
 
-		enemies[i].position.x = i * 100;
-		enemies[i].position.y = i * 100;
+		enemies[i].position.x = Math.floor(Math.random() * (700 - 200 + 1)) + 200;
+		enemies[i].position.y = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
 	};
 
 	
@@ -112,10 +118,10 @@ function detectNearCollision (x1, y1, width1, height1, x2, y2, width2, height2) 
 }
 
 function movePlayer(x, y, deltaX, deltaY, turn) {
-	if (turn % 7 === 0) {
-		player.texture = PIXI.Texture.fromImage("media/enemy.jpeg");
-	} else {
-		player.texture = PIXI.Texture.fromImage("media/player.jpeg");
+	if (turn % 50 === 0) {
+		player.texture = PIXI.Texture.fromImage("media/CharState1.png");
+	} else if (turn % 50 === 25){
+		player.texture = PIXI.Texture.fromImage("media/CharState2.png");
 	}
 	
 	turn++;
@@ -139,6 +145,12 @@ function movePlayer(x, y, deltaX, deltaY, turn) {
 
 				dialog[i].position.x = enemies[i].position.x - 50;
 				dialog[i].position.y = enemies[i].position.y - 50;
+
+				dialog[i].interactive = true;
+
+				dialog[i].click = function(data){
+					alert('baba');
+				}
 			} else {
 				if (dialog[i]) {
 					stage.removeChild(dialog[i]);
