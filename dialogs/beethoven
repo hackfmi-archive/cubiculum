@@ -1,0 +1,60 @@
+!- Hallo.:
+  - How are you doing?:
+    !- [friendly]  We are all going to die. I am a little anxious.:
+      - Don’t worry. I will do my best.:
+        !- trust you will.
+      - Same here, buddy.:
+        !- Surely it will be quick.
+    !- [positive] Given the circumstances, quite well. Thank you.:
+      - That’s the spirit.:
+        - For now, that is.
+      - I am worried myself.:
+        - You should be. The end is near.
+    !- [neutral] Sorry, I am a little busy worrying about going to die.:
+      - I am leaving you alone then.:
+        - Try to stop that bomb!
+      - Sorry, I need just a minute.:
+        - Be quick and go stop that bomb.
+    !- [unfriendly] I don’t see the purpose of this talk.:
+      - Anyway.:
+        !- …
+      - I need your help!:
+        !- What do you want?
+      - Just let me save your life!:
+        !- What do you want?
+  - I am here to ask about the bomb.:
+    !- I don’t know who has it.:
+      - Have you seen anything?:
+        !- [friendly] Churchill was acting strange.
+          - What do you mean?:
+            !- He was talking to himself. He was looking tired and not his usual self. He was holding a bottle of whiskey half empty and he was really quiet. Also, when Napoleon asked him to a game of chess, he exited the room without saying anything. That’s strange if you ask me.
+        !- [positive] Check Churchill, but you didn’t hear it from me.
+        !- [neutral] I know an Englishman, who may be anxious about something.:
+          - What do you mean?:
+            !- That’s all I can tell you now.
+        !- [unfriendly] I know something, but I don’t trust you will act accordingly.
+          - You have to trust me.:
+            !- Sorry, but I prefer talking to somebody else about that subject.
+      - Who do you suspect?
+      - You seem suspicious.
+      - What do you think of Napoleon?:
+        !- He is a jerk. I don’t trust him.
+      - What do you think of Gandhi?:
+        !- I nice person, but kind of illogical.
+      - What do you think of Chaplin?:
+        !- You can’t take that person seriously. He is an insult to my mother tongue.
+      - What do you think of Churchill?:
+        !- Well, he is usually a nice guy. Kind of a ruin, but very smart.
+  - Have you heard anything new?:
+    !- [friendly] Churchill was acting strange.:
+      - What do you mean?:
+        !- I think he might know something about the threat.:
+          - Do you think he has the bomb?:
+            !- Not sure. I am just saying he was not his usual self.
+          - Are you sure?:
+            !- In times like that there is nothing one can be sure about.
+    !- [positive] No, but I know something.:
+      - About what?:
+        !- About the bomb.
+    !- [neutral] What do you mean new?:
+    !- [unfriendly] No and I won’t. 

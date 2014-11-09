@@ -1,0 +1,84 @@
+[
+  {
+    "author": "beethoven",
+    "reply": "Hallo",
+    "next": [
+      {
+        "author": "player",
+        "reply": "How are you doing?",
+        "next": [
+          {
+            "author": "beethoven",
+            "reply": "We are all going to die. I am a little anxious.",
+            "mood": "friendly",
+            "next": [
+              {
+                "author": "player",
+                "reply": "Don’t worry. I will do my best.",
+                "next": [
+                  {
+                    "author": "beethoven",
+                    "reply": "trust you will."
+                  }
+                ]
+              },
+              {
+                "author": "player",
+                "reply": "Same here, buddy.",
+                "next": [
+                  {
+                    "author": "beethoven",
+                    "reply": "Surely it will be quick."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "author": "beethoven",
+            "reply": "Given the circumstances, quite well. Thank you.",
+            "mood": "positive",
+            "next": [
+              {
+                "author": "player",
+                "reply": "That’s the spirit."
+              }
+            ]
+          },
+          {
+            "author": "beethoven",
+            "reply": "Sorry, I am a little busy worrying about going to die.",
+            "mood": "neutral",
+            "next": {
+              "author": "player",
+              "reply": "I am leaving you alone then.",
+              "next": [
+                {
+                  "author": "beethoven",
+                  "reply": "Try to stop that bomb!"
+                }
+              ]
+            }
+          },
+          {
+            "author": "beethoven",
+            "reply": "I don’t see the purpose of this talk.",
+            "mood": "unfriendly",
+            "next": [
+              {
+                "author": "player",
+                "reply": "Just let me save your life!",
+                "next": [
+                  {
+                    "author": "beethoven",
+                    "reply": "What do you want?"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
