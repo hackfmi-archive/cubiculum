@@ -51,7 +51,8 @@ var assetsToLoader = ["../media/Room4.jpg",
 	"../media/Friendly.png",
 	"../media/Unfriendly.png",
 	"../media/Neutral.png",
-	"../media/Positive.png",];
+	"../media/Positive.png",
+	"../media/dialog.png"];
 
 // create a new loader
 loader = new PIXI.AssetLoader(assetsToLoader);
@@ -234,45 +235,22 @@ function onAssetsLoaded()
 
 	setTimeout(
 		function(){
-			var i = 2;
-
-			talk = new PIXI.Text("Pixi.js can has text!");
-			stage.addChild(talk);
-
-			talk.position.x = enemies[i].position.x - 20;
-			talk.position.y = enemies[i].position.y - 30;
-
-			renderer.render(stage);
-
-			setTimeout(
-				function(){
-					stage.removeChild(talk);
-					renderer.render(stage);
-				},
-				4000
-			);
-		},
-		2000
-	);
-
-	setTimeout(
-		function(){
 			var i = 3;
 
-			var talkBackgroundTexture = PIXI.Texture.fromImage("media/CharSmallState1B.png");
+			var talkBackgroundTexture = PIXI.Texture.fromImage("media/dialog.png");
 			talkBackground = new PIXI.Sprite(talkBackgroundTexture);
 			stage.addChild(talkBackground);
 
-			talkBackground.position.x = enemies[i].position.x - 20;
-			talkBackground.position.y = enemies[i].position.y - 30;
+			talkBackground.position.x = enemies[i].position.x - 120;
+			talkBackground.position.y = enemies[i].position.y - 80;
 
 			renderer.render(stage);
 
-			talk = new PIXI.Text("Pixi.js can has text!");
+			talk = new PIXI.Text("I am surrounded\nby cowards!", {font:"12px Arial"});
 			stage.addChild(talk);
 
-			talk.position.x = enemies[i].position.x - 20;
-			talk.position.y = enemies[i].position.y - 30;
+			talk.position.x = enemies[i].position.x - 90;
+			talk.position.y = enemies[i].position.y - 50;
 
 			renderer.render(stage);
 
@@ -285,7 +263,40 @@ function onAssetsLoaded()
 				4000
 			);
 		},
-		10000
+		5000
+	);
+
+	setTimeout(
+		function(){
+			var i = 1;
+
+			var talkBackgroundTexture = PIXI.Texture.fromImage("media/dialog.png");
+			talkBackground = new PIXI.Sprite(talkBackgroundTexture);
+			stage.addChild(talkBackground);
+
+			talkBackground.position.x = enemies[i].position.x - 120;
+			talkBackground.position.y = enemies[i].position.y - 80;
+
+			renderer.render(stage);
+
+			talk = new PIXI.Text("We should\n not be afraid.", {font:"12px Arial"});
+			stage.addChild(talk);
+
+			talk.position.x = enemies[i].position.x - 70;
+			talk.position.y = enemies[i].position.y - 50;
+
+			renderer.render(stage);
+
+			setTimeout(
+				function(){
+					stage.removeChild(talkBackground);
+					stage.removeChild(talk);
+					renderer.render(stage);
+				},
+				4000
+			);
+		},
+		1000
 	);
 }
 
