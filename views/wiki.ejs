@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>wiki</title>
+    <meta charset='utf-8'>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+  </head>
+  <body>
+    <%- 'wiki' %>
+    <script type='text/javascript' src='/public/common_english_words.js'></script>
+    <script type='text/javascript' src='/public/player_input_effect.js'></script>
+    
+    <form id='z'>
+      <input type='text' name='input' id='input'>
+      <input type='submit' value='say'>
+    </form>
+    <script type='text/javascript'>
+        $('#z').on('submit', function() {
+            calculate_effect(beethoven, $('#input').val(), function(e) {
+                console.log(OPINION_LABELS[e + 1]);
+            });
+            return false;
+        });
+    </script>
+  </body>
+</html>

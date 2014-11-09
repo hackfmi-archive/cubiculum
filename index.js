@@ -12,6 +12,9 @@ app.get('/', function(req, res) {
   res.render('index', {});
 });
 
+app.get('/wiki/', function(req, res) {
+  res.render('wiki', {});
+});
 
 app.listen(3000);
 

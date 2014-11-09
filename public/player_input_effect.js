@@ -9,10 +9,11 @@ var Character = function(obj) {
 var beethoven = new Character(
     {name: 2, age: 52, epoch: 'classical',
         likes: [
-            'classical music',
+            'classical',
             'symphony',
             'disabled',
-            'sign language',
+            'sign',
+            'language',
             'cleaning',
             'hygiene'
         ],
@@ -32,6 +33,8 @@ POSITIVE = 1;
 NEUTRAL = 0;
 UNFRIENDLY = -1;
 
+OPINION_LABELS = ['UNFRIENDLY', 'NEUTRAL', 'POSITIVE', 'FRIENDLY'];
+
 /* calculates the emotional effect
    of player-inputed text to a character
    returns coeficient between -1:2
@@ -50,16 +53,17 @@ function calculate_effect(character, input, callback) {
 
         var like_effect = 0;
         var dislike_effect = 0;
-
-        for(var i = 0;i < character.likes.lenth; i ++) {
+        for(var i = 0;i < character.likes.length; i++) {
             var like = character.likes[i];
+            console.log('LIKE?', like, page_words[like]);
             if(page_words[like] == true) {
                 like_effect += 1;
             }
         }
 
-        for(var i = 0;i < character.dislikes.lenth; i ++) {
+        for(var i = 0;i < character.dislikes.length; i ++) {
             var dislike = character.dislikes[i];
+            console.log('DISLIKE?', dislike, page_words[dislike]);
             if(page_words[dislike] == true) {
                 dislike_effect += 1;
             }
@@ -80,7 +84,7 @@ function calculate_effect(character, input, callback) {
         else {
             effect = UNFRIENDLY;
         }
-        callback(effect);                
+        callback(effect);
     });
 }
     
@@ -91,47 +95,44 @@ function calculate_effect(character, input, callback) {
 function load_wikipedia_page_words(input, callback) {
     //load wikipedia page
     //split words
-    $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&page=" + input + 
-              "&prop=text&section=all&format=json&callback=?", function (data) {
-        var words = [];
-        for (text in data.parse.text) {
-            var text = data.parse.text[text].split("/<.>/");
-            // var pText = "";
-            // for (p in text) {
-            //     //Remove html comment
-            //     text[p] = text[p].split("<!--");
-            //     if (text[p].length > 1) {
-            //         text[p][0] = text[p][0].split(/\r\n|\r|\n/);
-            //         text[p][0] = text[p][0][0];
-            //         text[p][0] += "</p> ";
-            //     }
-            //     text[p] = text[p][0];
-            //     //Construct a string from paragraphs
-            //     if (text[p].indexOf("</p>") == text[p].length - 5) {
-            //         var htmlStrip = text[p].replace(, '') //Remove HTML
-            //         debugger;
-            //         var splitNewline = htmlStrip.split(/\r\n|\r|\n/); //Split on newlines
-            //         for (newline in splitNewline) {
-            //             if (splitNewline[newline].substring(0, 11) != "Cite error:") {
-            //                 pText += splitNewline[newline];
-            //                 pText += "\n";
-            //             }
-            //         }
-            //     }
-            // }
-            // pText = pText.substring(0, pText.length - 2); //Remove extra newline
-            // pText = pText.replace(/\[\d+\]/g, ""); //Remove reference tags (e.x. [1], [4], etc)
-            // console.log(pText)
-            console.log(text);
-            words.push(text);
-            console.log(2);
-        }    
-        var words_set = {};
-        for(var i = 0; i < words.length; i ++) {
-            if(COMMON_ENGLISH_WORDS[words[i]]) {
-                words_set[words[i]] = true;
-            }
+    var e = "http://en.wikipedia.org/w/api.php?action=query&list=search&" +
+              "format=json&srsearch=" + input + "&srprop=timestamp&callback=?";
+    $.getJSON(e, function (data) {
+        if(data.error) {
+            return;
         }
-        callback(words_set);
+        var winner = data.query.search[0].title;
+       
+        $.getJSON("http://en.wikipedia.org/w/api.php?action=query&titles=" + winner + 
+                  "&prop=extracts&redirect=true&format=json&callback=?", function (data) {
+            console.log(data);
+            if(data.error) {
+                console.log('wiki error');
+                return;
+            }
+            var pages = data.query.pages;
+            
+            var data_dom = $(pages[Object.keys(pages)[0]].extract);
+            //var data_dom = $(data.parse.text['*']);
+            DATA = data_dom
+            var text = data_dom.text();
+            
+            var words = text.split(/[\<\>\s]/);
+        
+            //console.log(text);
+            words.push(text);
+             
+            var words_set = {};
+            for(var i = 0; i < words.length; i ++) {
+                var word = words[i].toLowerCase();
+
+                if(!COMMON_ENGLISH_WORDS[word]) {
+                    words_set[word] = true;
+                }
+            }
+            wordsS = words_set
+            console.log(words_set);
+            callback(words_set);
+        });            
     });
 }
