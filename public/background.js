@@ -1,7 +1,27 @@
 $(document).on('click', '#ask', function () {
-	// search in wikipedia
+	var index = parseInt($(this).data('index'));
+	var character = enemies[index];
 	var input = $('#charInput').val();
-	console.log(input);
+
+
+	
+	calculate_effect(character, input, function (mood) {
+		character.mood += mood;
+
+		var moodLabel = mood_label(character.mood).toLowerCase();
+		var moodLabelCapitalize = moodLabel[0].toUpperCase() + moodLabel.slice(1);
+
+		if ($('#ask').parent().find('img').length >= 2) {
+			$($('#ask').parent().find('img:nth-of-type(2)')[0]).fadeTo( "slow", 0.33 );
+		}
+
+		if ($('#ask').parent().find('img').length >= 3) {
+			$($('#ask').parent().find('img:nth-of-type(2)')[0]).remove();
+			$($('#ask').parent().find('img:nth-of-type(2)')[0]).fadeTo( "slow", 0.33 );
+		}
+
+		$('#ask').parent().append("<img class='emo' src='../media/" + moodLabelCapitalize + ".png' style='margin-left: 60px;'/>");
+	})
 });
 
 // create an array of assets to load
@@ -27,7 +47,11 @@ var assetsToLoader = ["../media/Room4.jpg",
 	"../media/Gandhi.jpeg",
 	"../media/Gandhi1.png",
 	"../media/Gandhi2.png",
-	"../media/Gandhi3.png",];
+	"../media/Gandhi3.png",
+	"../media/Friendly.png",
+	"../media/Unfriendly.png",
+	"../media/Neutral.png",
+	"../media/Positive.png",];
 
 // create a new loader
 loader = new PIXI.AssetLoader(assetsToLoader);
@@ -61,6 +85,7 @@ var enemies = [];
 var dialog = [];
 var talkTextures = [];
 var talks = [];
+var emo;
 
 function onAssetsLoaded()
 {
@@ -125,6 +150,8 @@ function onAssetsLoaded()
 
 		enemies[i].position.x = Math.floor(Math.random() * (850 - 200 + 1)) + 200;
 		enemies[i].position.y = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
+
+		enemies[i].mood = NEUTRAL;
 	};
 
 	enemies[0].name = 'Napoleon';
@@ -144,6 +171,42 @@ function onAssetsLoaded()
 	enemies[2].pic = '../media/Beethoven.jpeg';
 	enemies[3].pic = '../media/Chaplin.jpeg';
 	enemies[4].pic = '../media/Gandhi.jpeg';
+
+	enemies[2].likes = [
+	            'classical',
+	            'symphony',
+	            'disabled',
+	            'sign',
+	            'language',
+	            'cleaning',
+	            'hygiene',
+	            'opera',
+	            'stoic',
+	            'tough',
+	            'religious',
+	            'christianity',
+	            'heroic',
+	            'epic',
+	            'race',
+	            'competition',
+	            'tournament'
+	        ];
+    enemies[2].dislikes = [
+	            'country',
+	            'pop',
+	            'guitar',
+	            'electronic',
+	            'dubstep',
+	            'lazy',
+	            'holiday',
+	            'landmark',
+	            'punctional',
+	            'manners',
+	            'sociable'
+	            'interaction',
+	            'conquest',
+	            'dictator'
+	        ];
 
 	requestAnimFrame(animate);
 
@@ -205,12 +268,7 @@ function detectNearCollision (x1, y1, width1, height1, x2, y2, width2, height2) 
 }
 
 function moveEnemy(x, y, deltaX, deltaY, turn, i) {
-	var character;
-
-	if (enemies[i].name === 'Napoleon') {
-		character
-	}
-
+	
 	if (turn % 60 === 0) {
 		enemies[i].texture = PIXI.Texture.fromImage("media/" + enemies[i].name + "2.png");
 	} else if (turn % 60 === 20){
@@ -308,7 +366,7 @@ function movePlayer(x, y, deltaX, deltaY, turn) {
 			    	className: "my-dialog",
 					message: "<img src=" + enemies[closestIndex].pic + " style='margin-right: 30px;'/>" +
 						"<input id='charInput' placeholder='Ask me...'/>" +
-						"<button id='ask'> Ask </button>",
+						"<button id='ask' data-index='" + closestIndex + "'> Ask </button>",
 					title: enemies[closestIndex].name,
 					buttons: {
 						first: {
