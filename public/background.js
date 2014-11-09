@@ -83,8 +83,8 @@ var table;
 var player;
 var enemies = [];
 var dialog = [];
-var talkTextures = [];
-var talks = [];
+var talkBackground;
+var talk;
 var emo;
 
 function onAssetsLoaded()
@@ -202,7 +202,7 @@ function onAssetsLoaded()
 	            'landmark',
 	            'punctional',
 	            'manners',
-	            'sociable'
+	            'sociable',
 	            'interaction',
 	            'conquest',
 	            'dictator'
@@ -230,6 +230,62 @@ function onAssetsLoaded()
 			initiateEnemyMove (x, y, i)
 		},
 		7000
+	);
+
+	setTimeout(
+		function(){
+			var i = 2;
+
+			talk = new PIXI.Text("Pixi.js can has text!");
+			stage.addChild(talk);
+
+			talk.position.x = enemies[i].position.x - 20;
+			talk.position.y = enemies[i].position.y - 30;
+
+			renderer.render(stage);
+
+			setTimeout(
+				function(){
+					stage.removeChild(talk);
+					renderer.render(stage);
+				},
+				4000
+			);
+		},
+		2000
+	);
+
+	setTimeout(
+		function(){
+			var i = 3;
+
+			var talkBackgroundTexture = PIXI.Texture.fromImage("media/CharSmallState1B.png");
+			talkBackground = new PIXI.Sprite(talkBackgroundTexture);
+			stage.addChild(talkBackground);
+
+			talkBackground.position.x = enemies[i].position.x - 20;
+			talkBackground.position.y = enemies[i].position.y - 30;
+
+			renderer.render(stage);
+
+			talk = new PIXI.Text("Pixi.js can has text!");
+			stage.addChild(talk);
+
+			talk.position.x = enemies[i].position.x - 20;
+			talk.position.y = enemies[i].position.y - 30;
+
+			renderer.render(stage);
+
+			setTimeout(
+				function(){
+					stage.removeChild(talkBackground);
+					stage.removeChild(talk);
+					renderer.render(stage);
+				},
+				4000
+			);
+		},
+		10000
 	);
 }
 
