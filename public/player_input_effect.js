@@ -1,33 +1,3 @@
-var Character = function(obj) {
-    this.properties = ['likes', 'dislikes'];
-    for(var i = 0;i < this.properties.length; i++) {
-        var property = this.properties[i];
-        this[property] = obj[property];
-    }
-};
-
-var beethoven = new Character(
-    {name: 2, age: 52, epoch: 'classical',
-        likes: [
-            'classical',
-            'symphony',
-            'disabled',
-            'sign',
-            'language',
-            'cleaning',
-            'hygiene'
-        ],
-        dislikes: [
-            'country',
-            'pop',
-            'guitar',
-            'electronic',
-            'dubstep',
-            'lazy',
-            'holiday',
-            'landmark'
-        ]});
-
 FRIENDLY = 2;
 POSITIVE = 1;
 NEUTRAL = 0;
@@ -65,7 +35,8 @@ function calculate_effect(character, input, callback) {
 
         var like_effect = 0;
         var dislike_effect = 0;
-        for(var i = 0;i < character.likes.length; i++) {
+        var l = character.likes ? character.likes.length : 0;
+        for(var i = 0;i < l; i++) {
             var like = character.likes[i];
             console.log('LIKE?', like, page_words[like]);
             if(page_words[like] == true) {
@@ -73,7 +44,8 @@ function calculate_effect(character, input, callback) {
             }
         }
 
-        for(var i = 0;i < character.dislikes.length; i ++) {
+        var d = character.dislikes ? character.dislikes.length : 0;
+        for(var i = 0;i < d; i ++) {
             var dislike = character.dislikes[i];
             console.log('DISLIKE?', dislike, page_words[dislike]);
             if(page_words[dislike] == true) {
