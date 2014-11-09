@@ -1,10 +1,10 @@
+
+
 $(document).on('click', '#ask', function () {
 	var index = parseInt($(this).data('index'));
 	var character = enemies[index];
 	var input = $('#charInput').val();
 
-
-	
 	calculate_effect(character, input, function (mood) {
 		character.mood += mood;
 
@@ -52,7 +52,8 @@ var assetsToLoader = ["../media/Room4.jpg",
 	"../media/Unfriendly.png",
 	"../media/Neutral.png",
 	"../media/Positive.png",
-	"../media/dialog.png"];
+	"../media/dialog.png",
+	"../media/Caubiculum.png"];
 
 // create a new loader
 loader = new PIXI.AssetLoader(assetsToLoader);
@@ -266,38 +267,38 @@ function onAssetsLoaded()
 		5000
 	);
 
-	setTimeout(
-		function(){
-			var i = 1;
+	// setTimeout(
+	// 	function(){
+	// 		var i = 1;
 
-			var talkBackgroundTexture = PIXI.Texture.fromImage("media/dialog.png");
-			talkBackground = new PIXI.Sprite(talkBackgroundTexture);
-			stage.addChild(talkBackground);
+	// 		var talkBackgroundTexture = PIXI.Texture.fromImage("media/dialog.png");
+	// 		talkBackground = new PIXI.Sprite(talkBackgroundTexture);
+	// 		stage.addChild(talkBackground);
 
-			talkBackground.position.x = enemies[i].position.x - 120;
-			talkBackground.position.y = enemies[i].position.y - 80;
+	// 		talkBackground.position.x = enemies[i].position.x - 120;
+	// 		talkBackground.position.y = enemies[i].position.y - 80;
 
-			renderer.render(stage);
+	// 		renderer.render(stage);
 
-			talk = new PIXI.Text("We should\n not be afraid.", {font:"12px Arial"});
-			stage.addChild(talk);
+	// 		talk = new PIXI.Text("We should\n not be afraid.", {font:"12px Arial"});
+	// 		stage.addChild(talk);
 
-			talk.position.x = enemies[i].position.x - 70;
-			talk.position.y = enemies[i].position.y - 50;
+	// 		talk.position.x = enemies[i].position.x - 70;
+	// 		talk.position.y = enemies[i].position.y - 50;
 
-			renderer.render(stage);
+	// 		renderer.render(stage);
 
-			setTimeout(
-				function(){
-					stage.removeChild(talkBackground);
-					stage.removeChild(talk);
-					renderer.render(stage);
-				},
-				4000
-			);
-		},
-		1000
-	);
+	// 		setTimeout(
+	// 			function(){
+	// 				stage.removeChild(talkBackground);
+	// 				stage.removeChild(talk);
+	// 				renderer.render(stage);
+	// 			},
+	// 			4000
+	// 		);
+	// 	},
+	// 	1000
+	//);
 }
 
 function initiateEnemyMove (x, y, i) {
