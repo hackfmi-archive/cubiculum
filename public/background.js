@@ -6,25 +6,25 @@ $(document).on('click', '#ask', function () {
 
 // create an array of assets to load
 
-var assetsToLoader = ["../media/room4.jpg",
-	"../media/chairmini2.png",
-	"../media/tablemini2.png",
+var assetsToLoader = ["../media/Room4.jpg",
+	"../media/Chairmini2.png",
+	"../media/Tablemini2.png",
 	"../media/CharSmallState1B.png",
 	"../media/CharSmallState1half.png",
 	"../media/CharSmallState2B.png",
-	"../media/enemy.jpeg",
-	"../media/dialog.jpeg",
-	"../media/napoleon.jpeg",
+	"../media/Enemy.jpeg",
+	"../media/Dialog.jpeg",
+	"../media/Napoleon.jpeg",
 	"../media/Napoleon1.png",
 	"../media/Napoleon2.png",
 	"../media/Napoleon3.png",
-	"../media/churchill.jpeg",
+	"../media/Churchill.jpeg",
 	"../media/Churchill1.png",
-	"../media/beethoven.jpeg",
+	"../media/Beethoven.jpeg",
 	"../media/Beethoven1.png",
-	"../media/chaplin.jpeg",
+	"../media/Chaplin.jpeg",
 	"../media/Chaplin1.png",
-	"../media/gandhi.jpeg",
+	"../media/Gandhi.jpeg",
 	"../media/Gandhi1.png",
 	"../media/Gandhi2.png",
 	"../media/Gandhi3.png",];
@@ -64,7 +64,7 @@ var talks = [];
 
 function onAssetsLoaded()
 {
-	var backgroundTexture = PIXI.Texture.fromImage("media/room4.jpg");
+	var backgroundTexture = PIXI.Texture.fromImage("media/Room4.jpg");
 	background = new PIXI.Sprite(backgroundTexture);
 	stage.addChild(background);
 
@@ -94,14 +94,14 @@ function onAssetsLoaded()
         });
 	}
 
-	var chairTexture = PIXI.Texture.fromImage("media/chairmini2.png");
+	var chairTexture = PIXI.Texture.fromImage("media/Chairmini2.png");
 	chair = new PIXI.Sprite(chairTexture);
 	stage.addChild(chair);
 
 	chair.position.x = 100;
 	chair.position.y = 350;
 
-	var tableTexture = PIXI.Texture.fromImage("media/tablemini2.png");
+	var tableTexture = PIXI.Texture.fromImage("media/Tablemini2.png");
 	table = new PIXI.Sprite(tableTexture);
 	stage.addChild(table);
 
@@ -115,7 +115,7 @@ function onAssetsLoaded()
 	player.position.x = 200;
 	player.position.y = 150;
 
-	var enemyTexture = PIXI.Texture.fromImage("media/enemy.jpeg");
+	var enemyTexture = PIXI.Texture.fromImage("media/Enemy.jpeg");
 
 	var enemiesCount = 5;
 
@@ -139,11 +139,11 @@ function onAssetsLoaded()
 	enemies[3].texture = PIXI.Texture.fromImage("media/Chaplin1.png");
 	enemies[4].texture = PIXI.Texture.fromImage("media/Gandhi1.png");
 
-	enemies[0].pic = '../media/napoleon.jpeg';
-	enemies[1].pic = '../media/churchill.jpeg';
-	enemies[2].pic = '../media/beethoven.jpeg';
-	enemies[3].pic = '../media/chaplin.jpeg';
-	enemies[4].pic = '../media/gandhi.jpeg';
+	enemies[0].pic = '../media/Napoleon.jpeg';
+	enemies[1].pic = '../media/Churchill.jpeg';
+	enemies[2].pic = '../media/Beethoven.jpeg';
+	enemies[3].pic = '../media/Chaplin.jpeg';
+	enemies[4].pic = '../media/Gandhi.jpeg';
 
 	requestAnimFrame(animate);
 
@@ -291,7 +291,7 @@ function movePlayer(x, y, deltaX, deltaY, turn) {
 				}
 			}
 
-			var dialogTexture = PIXI.Texture.fromImage("media/dialog.jpeg");
+			var dialogTexture = PIXI.Texture.fromImage("media/Dialog.jpeg");
 			dialog[closestIndex] = new PIXI.Sprite(dialogTexture);
 			stage.addChild(dialog[closestIndex]);
 
