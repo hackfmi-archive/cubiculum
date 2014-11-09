@@ -202,7 +202,7 @@ function onAssetsLoaded()
 	            'landmark',
 	            'punctional',
 	            'manners',
-	            'sociable'
+	            'sociable',
 	            'interaction',
 	            'conquest',
 	            'dictator'
