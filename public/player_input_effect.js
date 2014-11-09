@@ -1,5 +1,5 @@
 var Character = function(obj) {
-    this.properties = ['name', 'age', 'epoch', 'likes', 'dislikes'];
+    this.properties = ['likes', 'dislikes'];
     for(var i = 0;i < this.properties.length; i++) {
         var property = this.properties[i];
         this[property] = obj[property];
@@ -33,7 +33,19 @@ POSITIVE = 1;
 NEUTRAL = 0;
 UNFRIENDLY = -1;
 
-OPINION_LABELS = ['UNFRIENDLY', 'NEUTRAL', 'POSITIVE', 'FRIENDLY'];
+function mood_label(mood) {
+    if (mood <= -1) {
+        return 'UNFRIENDLY';
+    } else if (mood >= 2) {
+        return 'FRIENDLY';
+    }
+    else if(mood == 0) {
+        return 'NEUTRAL';
+    }
+    else if(mood == 1) {
+        return 'POSITIVE';
+    }
+}
 
 /* calculates the emotional effect
    of player-inputed text to a character
