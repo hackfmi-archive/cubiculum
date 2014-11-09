@@ -1,6 +1,6 @@
 // create an array of assets to load
 
-var assetsToLoader = ["../media/room4.jpg", "../media/chairmini.png","../media/CharState1.png", "../media/CharState2.png", "../media/enemy.jpeg", "../media/dialog.jpeg"];
+var assetsToLoader = ["../media/room4.jpg", "../media/chairmini.png","../media/CharSmallState1.png", "../media/CharSmallState2.png", "../media/enemy.jpeg", "../media/dialog.jpeg"];
 
 // create a new loader
 loader = new PIXI.AssetLoader(assetsToLoader);
@@ -71,7 +71,7 @@ function onAssetsLoaded()
 	chair.position.x = 100;
 	chair.position.y = 300;
 
-	var playerTexture = PIXI.Texture.fromImage("media/CharState2.png");
+	var playerTexture = PIXI.Texture.fromImage("media/CharSmallState2.png");
 	player = new PIXI.Sprite(playerTexture);
 	stage.addChild(player);
 
@@ -119,9 +119,9 @@ function detectNearCollision (x1, y1, width1, height1, x2, y2, width2, height2) 
 
 function movePlayer(x, y, deltaX, deltaY, turn) {
 	if (turn % 50 === 0) {
-		player.texture = PIXI.Texture.fromImage("media/CharState1.png");
+		player.texture = PIXI.Texture.fromImage("media/CharSmallState1.png");
 	} else if (turn % 50 === 25){
-		player.texture = PIXI.Texture.fromImage("media/CharState2.png");
+		player.texture = PIXI.Texture.fromImage("media/CharSmallState2.png");
 	}
 	
 	turn++;
@@ -149,7 +149,7 @@ function movePlayer(x, y, deltaX, deltaY, turn) {
 				dialog[i].interactive = true;
 
 				dialog[i].click = function(data){
-					alert('baba');
+				    
 				}
 			} else {
 				if (dialog[i]) {
